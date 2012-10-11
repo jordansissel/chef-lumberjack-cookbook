@@ -1,3 +1,18 @@
-ulimit -n 10000
-exec chpst -u lumberjack \
-  /opt/lumberjack/bin/lumberjack.sh --host <%= node.lumberjack.hosts.join(",") %> --port <%= node.lumberjack.port %> --ssl-ca-path <%= node.lumberjack.ssl_ca_path %> <%= node.lumberjack.fields.collect { |k,v| "--field #{k}=#{v}" } %> <%= node.lumberjack.paths %>
+# This is the list of hosts receiving lumberjack events.
+# Only one is in use at any given time, when a connection fails
+# a new one will be selected at random.
+#default.lumberjack.hosts = []
+
+# This is the remote port lumberjack will connect to, you'll want to have
+# logstash listen on this port.
+default.lumberjack.port = 5005
+
+# Set the fields to any arbitrary fields you want to pass along with each
+# event.
+default.lumberjack.fields = {
+  "type" => "megalog"
+}
+
+# The list of paths to monitor
+# Example: [ "/var/log/messages", "/dh/apache2/*/logs/mega.log" ]
+#default.lumberjack.paths = []

@@ -1,9 +1,9 @@
 user "lumberjack"
 group "lumberjack"
 
-cookbook_file "/etc/ssl/certs/lumberjack.crt" do
+file"/etc/ssl/certs/lumberjack.crt" do
   action :create
-  source "lumberjack.crt"
+  content node.lumberjack.ssl_ca_cert_string
   mode "0644"
 end
 
